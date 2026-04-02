@@ -1,0 +1,22 @@
+@let typingUsers = (typingUsers$ | async);
+
+<div class="chat__header">
+  <span class="chat__header-status" [class.chat__header-status_success]="connected$ | async"></span>
+  <span>Вы вошли как: <strong>{{ currentUser$ | async }}</strong></span>
+</div>
+
+@if (typingUsers?.length) {
+  <div class="chat__typing-indicator">
+    {{ typingUsers?.join(', ') }} печатает...
+  </div>
+}
+
+<div class="chat__message-list" #scrollContainer>
+  @for (message of (messages$ | async); track $index) {
+    @if (message.type === 'message') {
+      <app-message [message]="message"></app-message>
+    }
+  }
+</div>
+
+<app-input-area></app-input-area>

@@ -1,0 +1,14 @@
+.input-area {
+  width: 100%;
+
+  input {
+    height: 100%;
+    border: none;
+    border-top: 1px solid var(--border-main);
+    border-radius: 0 0 0 0.25rem;
+  }
+
+  button {
+    border-radius: 0 0 0.25rem 0;
+  }
+}

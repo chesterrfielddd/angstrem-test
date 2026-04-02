@@ -1,0 +1,2 @@
+<input [(ngModel)]="messageText" (keyup.enter)="send()" (ngModelChange)="onTyping()" placeholder="Напишите сообщение...">
+<button [disabled]="!messageText.trim()" (click)="send()">Отправить</button>

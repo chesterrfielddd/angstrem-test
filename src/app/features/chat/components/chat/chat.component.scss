@@ -1,0 +1,42 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-main);
+  border-radius: 0.25rem;
+
+  &__header {
+    width: 100%;
+    border-bottom: 1px solid var(--border-main);
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &-status {
+      border-radius: 100%;
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: var(--danger);
+
+      &_success {
+        background-color: var(--success);
+      }
+    }
+  }
+
+  &__typing-indicator {
+    width: 100%;
+    border-bottom: 1px solid var(--border-main);
+    padding: 0.25rem 0.5rem;
+  }
+
+  &__message-list {
+    height: 40rem;
+    max-height: 100vh;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: scroll;
+  }
+}

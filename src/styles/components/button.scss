@@ -1,0 +1,43 @@
+@use '../variables.scss';
+@use '../fonts.scss';
+
+button {
+  font-family: 'Beast';
+  font-size: 1rem;
+  color: #000;
+  background-color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 0.125rem;
+  outline: none;
+  transition: 0.2s;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--accent-hovered);
+    border-color: var(--accent-hovered);
+  }
+
+  &:active {
+    background-color: var(--accent-active);
+    border-color: var(--accent-active);
+  }
+}
+
+.button-secondary {
+  background: var(--background-secondary);
+  color: var(--accent-subdued);
+  border-color: var(--accent-subdued);
+  
+  &:hover {
+    background: var(--background-secondary);
+    border-color: var(--accent-subdued-hovered);
+    color: var(--accent-subdued-hovered);
+  }
+  
+  &:active {
+    background: var(--background-secondary);
+    border-color: var(--accent-subdued-active);
+    color: var(--accent-subdued-active);
+  }
+}

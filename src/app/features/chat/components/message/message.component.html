@@ -1,0 +1,8 @@
+<div class="message__author">
+  @if (message().author === (currentUser$ | async)) {
+    <p>Вы • {{ message().timestamp | date:'HH:mm' }}</p>
+    } @else {
+    <p>{{ message().author }} • {{ message().timestamp | date:'HH:mm' }}</p>
+  }
+</div>
+<p>{{ message().text }}</p>

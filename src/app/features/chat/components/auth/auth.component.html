@@ -1,0 +1,5 @@
+<h3>Добро пожаловать в чат) кто вы ?</h3>
+<div class="auth__input-container">
+  <input [(ngModel)]="name" type="text" placeholder="Введите ваше имя..." (keyup.enter)="login(name)">
+  <button (click)="login(name)">Войти</button>
+</div>
