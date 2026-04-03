@@ -41,48 +41,47 @@ export class ChatState {
   }
 
   @Action(ChatActions.SetUser)
-  setUser(ctx: StateContext<IChatStateModel>, { username }: ChatActions.SetUser) {
+  setUser(ctx: StateContext<IChatStateModel>, { username }: ChatActions.SetUser): void {
     ctx.patchState({ currentUser: username });
   }
 
   @Action(ChatActions.ConnectToChat)
-  connect(ctx: StateContext<IChatStateModel>) {
-    ctx.patchState({
-      connected: true
-    })
-    return this._api.connect().pipe(
-      tap(msg => ctx.dispatch(new ChatActions.ReceiveMessage(msg)))
-    );
+  connect(): void {
+    return this._api.connect();
   }
 
   @Action(ChatActions.ReceiveMessage)
-  receive(ctx: StateContext<IChatStateModel>, { payload }: ChatActions.ReceiveMessage) {
+  receiveMessage(ctx: StateContext<IChatStateModel>, { payload }: ChatActions.ReceiveMessage): void {
     const state = ctx.getState();
 
-    if (payload.type === 'message') {
+    ctx.patchState({
+      messages: [...state.messages, payload]
+    });
+  }
+
+  @Action(ChatActions.ReceiveTypingData)
+  receiveTypingData(ctx: StateContext<IChatStateModel>, { payload }: ChatActions.ReceiveTypingData): void {
+    const state = ctx.getState();
+
+    if (payload.isTyping) {
+      const updatedTypingUsers = [...state.typingUsers, payload.user]
+
       ctx.patchState({
-        messages: [...state.messages, payload]
-      });
+        typingUsers: updatedTypingUsers
+      })
+      
     } else {
-      if (payload.isTyping) {
-        const updatedTypingUsers = [...state.typingUsers, payload.user]
+      const updatedTypingUsers = state.typingUsers;
+      updatedTypingUsers.splice(state.typingUsers.indexOf(payload.user), 1);
 
-        ctx.patchState({
-          typingUsers: updatedTypingUsers
-        })
-      } else {
-        const updatedTypingUsers = state.typingUsers;
-        updatedTypingUsers.splice(state.typingUsers.indexOf(payload.user), 1);
-
-        ctx.patchState({
-          typingUsers: [...updatedTypingUsers]
-        })
-      }
+      ctx.patchState({
+        typingUsers: [...updatedTypingUsers]
+      })
     }
   }
 
   @Action(ChatActions.SendMessage)
-  sendMessage(ctx: StateContext<IChatStateModel>, { payload }: ChatActions.SendMessage) {
+  sendMessage(ctx: StateContext<IChatStateModel>, { payload }: ChatActions.SendMessage): void {
     const state = ctx.getState();
 
     const message: IMessage = {
@@ -95,6 +94,7 @@ export class ChatState {
     ctx.patchState({
       messages: [...state.messages, message]
     });
+
     this._api.sendMessage(message);
   }
 
@@ -110,10 +110,10 @@ export class ChatState {
     this._api.closeConnection();
   }
 
-  @Action(ChatActions.HandleError)
-  handleError(ctx: StateContext<IChatStateModel>): void {
+  @Action(ChatActions.SetConnected)
+  setConnected(ctx: StateContext<IChatStateModel>, { isConnected }: ChatActions.SetConnected): void {
     ctx.patchState({
-      connected: false
+      connected: isConnected
     })
   }
 }

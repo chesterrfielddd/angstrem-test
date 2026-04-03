@@ -18,7 +18,12 @@ export namespace ChatActions {
 
   export class ReceiveMessage {
     static readonly type = '[Chat] Receive Message';
-    constructor(readonly payload: IMessage | ITypingUser) { }
+    constructor(readonly payload: IMessage) { }
+  }
+
+  export class ReceiveTypingData {
+    static readonly type = '[Chat] Receive Typing Data';
+    constructor(readonly payload: ITypingUser) { }
   }
 
   export class SendTypingData {
@@ -30,7 +35,8 @@ export namespace ChatActions {
     static readonly type = '[Chat] Close Connection';
   }
 
-  export class HandleError {
-    static readonly type = '[Chat] Error';
+  export class SetConnected {
+    static readonly type = '[Chat] Set Connected';
+    constructor(readonly isConnected: boolean) {};
   }
 }
